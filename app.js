@@ -1,11 +1,10 @@
-function getProductData() {
+function getProductData(callback) {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function() {
         if (request.readyState == request.DONE) {
             if (request.status == 200) {
-                console.log('Done!')
-                console.log('Res:', request)
+                callback(JSON.parse(request.response))
             }
             else if (request.status == 400) {
                 alert('There was an error 400');
@@ -32,5 +31,17 @@ function ready(callback){
 }
 
 ready(function() {
-    getProductData()
+    const windowWidth = window.innerWidth
+
+    function updateImage(data) {
+        var imageSize = (windowWidth < 769) ? 'normal' : 'huge'
+        const src = data.images[0][imageSize]
+        document.getElementById('product-image').setAttribute('src', src)
+    }
+
+    function updateProduct(data) {
+        updateImage(data)
+    }
+
+    getProductData(updateProduct)
 })
