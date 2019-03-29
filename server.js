@@ -13,6 +13,35 @@ const username = 'admin'
 const password = 'password'
 const auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64')
 
+const getData = function(id) {
+    return new Promise(function(resolve, reject) {
+        const opts = {
+            host: 'interview-tech-testing.herokuapp.com',
+            path: '/product-details/' + id,
+            method: 'GET',
+            headers: {'Authorization': auth}}
+        var body = ''
+        https.request(opts, (function (res) {
+            res.on('data', (function (data) {
+                body = body + data.toString()
+            }))
+            res.on('end', function() {
+                console.log('resolving body')
+                resolve(body)
+            })
+        })).on('error', (function (e) {
+            console.log('Error:', e)
+        })).end()
+
+        console.log('test')
+    })
+}
+
+async function retrieveData(id) {
+    var r = await getData(id)
+    return r
+}
+
 //Create HTTP server and listen on port 3000 for requests
 http.createServer(function (req, response) {
     var filePath = '.' + req.url;
@@ -25,27 +54,13 @@ http.createServer(function (req, response) {
     switch (pathname) {
         case '/product-details':
             const pid = url.parse(req.url).query.split('=')[1]
-            var body = []
-            const opts = {
-                host: 'interview-tech-testing.herokuapp.com',
-                path: '/product-details/' + pid,
-                method: 'GET',
-                headers: {'Authorization': auth,
-                'Content-type': 'application/json'}
-            }
-            var getData = https.request(opts, (function (res) {
-                res.on('data', (function (data) {
-                    body.push(data)
-                }))
-                res.on('end', function() {
-                    body = Buffer.concat(body).toString()
-                })
-            }))
-
-            getData.end()
-            getData.on('error', (function (e) {
-                console.log('Error:', e)
-            }))
+            console.log('before retrieve data')
+            retrieveData(pid).then(function (e) {
+                console.log('then', (typeof e))
+                console.log('res', response.end(e))
+                response.end(e)
+            })
+            console.log('after retrieve data')
             break
     }
 
