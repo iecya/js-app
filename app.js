@@ -32,6 +32,7 @@ function ready(callback){
 
 ready(function() {
     const windowWidth = window.innerWidth
+    var selectedColor;
 
     function formatCurrency(num, currency) {
         return num.toLocaleString('en-GB', {style: 'currency', currency: currency})
@@ -58,10 +59,31 @@ ready(function() {
         }
     }
 
+    function productColors(colors) {
+        const el = document.getElementById('product-colors')
+        for (c = 0; c < colors.length; c++) {
+            console.log('C:', colors[c])
+            const item = document.createElement("li")
+            item.setAttribute("data-color", colors[c].colour)
+            item.style.background = colors[c].hexCode
+            console.log('item', item, ' - color', colors[c].hex)
+            el.append(item)
+        }
+    }
+
+    function updateColor(data, styleIdx) {
+        const style = styleIdx || 0
+        selectedColor = data.styles[style].colour
+        const el = document.getElementById('product-selected-color')
+        el.innerText = (el.innerText + ' ' + selectedColor)
+        productColors(data.styles)
+    }
+
     function updateProduct(data) {
         updateImage(data)
         updateName(data)
         updatePrice(data)
+        updateColor(data)
     }
 
     getProductData(updateProduct)

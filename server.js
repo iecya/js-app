@@ -18,6 +18,10 @@ app.get('/*.js', function(req, res) {
     res.sendFile(path.join(__dirname + req.url))
 })
 
+app.get('/*.css', function(req, res) {
+    res.sendFile(path.join(__dirname + req.url))
+})
+
 app.get('/product-details', function(req, res) {
     const pid = req.query.pid
     const opts = {
