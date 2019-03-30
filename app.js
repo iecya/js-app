@@ -75,7 +75,7 @@ ready(function() {
 
     function initColor(data, prod) {
         selectedColor = prod.colour
-        const el = document.getElementById('product-selected-color')
+        const el = document.querySelector('#product-selected-color span')
         el.innerText = (el.innerText + ' ' + selectedColor)
         productColors(data.styles, selectedColor)
     }

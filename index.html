@@ -9,28 +9,46 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-8 col-md-push-2 offset-md-2">
             <image src="" id="product-image" />
         </div>
         <div class="col-lg-6">
             <h2 id="product-name"></h2>
-            <p id="product-price">
-                <span id="current-price"></span>
-                <span id="price-saving"></span>
-                <span id="previous-price"></span>
-            </p>
-            <p id="product-selected-color">Selected colour:</p>
-            <ul id="product-colors"></ul>
-            <div id="product-size-wrapper">
-                <p>Select size:</p>
-                <select id="product-size" class="custom-select"></select>
-            </div>
-            <div id="product-qty-wrapper">
-                <p>Qty:</p>
-                <select id="product-qty" class="custom-select"></select>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p id="product-price">
+                        <span id="current-price"></span>
+                        <span id="price-saving"></span>
+                        <span id="previous-price"></span>
+                    </p>
+
+                    <p id="product-selected-color">Selected colour:
+                    <span></span></p>
+                    <ul id="product-colors"></ul>
+                </div>
             </div>
 
-            <button role="button" id="submit-button" class="btn btn-lg btn-block">Add to bag</button>
+            <div id="product-size-wrapper">
+                <p>Select size: <span></span></p>
+                <select id="product-size" class="custom-select"></select>
+            </div>
+
+            <div id="size-submit-wrapper">
+                <div id="product-qty-wrapper">
+                    <p>Qty:</p>
+                    <select id="product-qty" class="custom-select"></select>
+                </div>
+
+
+                <button role="button" id="submit-button" class="btn btn-lg btn-block">Add to bag</button>
+
+            </div>
+
+
+
+
+
 
             <div id="product-info"></div>
         </div>
