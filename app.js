@@ -108,6 +108,26 @@ ready(function() {
         }
     }
 
+    function initProdInfo(data) {
+        const el = document.getElementById("product-info")
+        for (i = 0; i < data.productInformation.length; i++) {
+            const currentInfo = data.productInformation[i]
+            const textEl = document.createElement("p")
+            textEl.innerText = currentInfo.text
+            el.append(textEl)
+            if (currentInfo.hasOwnProperty("children")) {
+                textEl.classList.add("info-title")
+                const children = document.createElement("ul")
+                for (c = 0; c < currentInfo.children.length; c++) {
+                    const item = document.createElement("li")
+                    item.innerText = currentInfo.children[c].text
+                    children.append(item)
+                }
+                el.append(children)
+            }
+        }
+    }
+
 
     function initProduct(data) {
         const prod = data.styles[0]
@@ -119,6 +139,7 @@ ready(function() {
         initColor(data, prod)
         initSize(prod)
         initQty(currentVariant)
+        initProdInfo(data)
     }
 
     getProductData(initProduct)
