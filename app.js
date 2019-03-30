@@ -1,10 +1,13 @@
+var data;
+
 function getProductData(callback) {
     var request = new XMLHttpRequest();
 
     request.onreadystatechange = function() {
         if (request.readyState == request.DONE) {
             if (request.status == 200) {
-                callback(JSON.parse(request.response))
+                data = JSON.parse(request.response)
+                callback()
             }
             else if (request.status == 400) {
                 alert('There was an error 400');
@@ -33,7 +36,6 @@ function ready(callback){
 ready(function() {
     const windowWidth = window.innerWidth
     var selectedColor;
-    var currentProduct;
     var currentVariant;
 
     function formatCurrency(num, currency) {
@@ -50,9 +52,8 @@ ready(function() {
         document.getElementById('product-name').innerText = data.name
     }
 
-    function updatePrice(prod, skuIdx) {
-        const sku = skuIdx || 0
-        const price = prod.skus[sku].price
+    function updatePrice(variant) {
+        const price = variant.price
         document.getElementById('current-price').innerText = formatCurrency(price.currentPrice, price.currency)
         if (price.previousPrice) {
             document.getElementById('previous-price').innerText = "Was " + formatCurrency(price.previousPrice, price.currency)
@@ -73,10 +74,14 @@ ready(function() {
         }
     }
 
-    function initColor(data, prod) {
+    function updateColorText(prod) {
         selectedColor = prod.colour
         const el = document.querySelector('#product-selected-color span')
-        el.innerText = (el.innerText + ' ' + selectedColor)
+        el.innerText = (selectedColor)
+    }
+
+    function initColor(data, prod) {
+        updateColorText(prod)
         productColors(data.styles, selectedColor)
     }
 
@@ -85,6 +90,7 @@ ready(function() {
         const defaultOption = document.createElement("option")
         defaultOption.setAttribute("disabled", true)
         defaultOption.setAttribute("selected", true)
+        defaultOption.setAttribute("value", "default")
         defaultOption.innerText = "Please select"
         elSel.append(defaultOption)
         for (s = 0; s < prod.skus.length; s++) {
@@ -129,13 +135,12 @@ ready(function() {
     }
 
 
-    function initProduct(data) {
+    function initProduct() {
         const prod = data.styles[0]
-        currentProduct = prod
         currentVariant = prod.skus[0]
         updateImage(prod)
         initName(data)
-        updatePrice(prod)
+        updatePrice(currentVariant)
         initColor(data, prod)
         initSize(prod)
         initQty(currentVariant)
@@ -143,4 +148,51 @@ ready(function() {
     }
 
     getProductData(initProduct)
+
+
+    function updateSelectedColor(color) {
+        document.querySelector("[data-color='" + selectedColor + "']").classList.remove('active')
+        selectedColor = color
+        document.querySelector("[data-color='" + selectedColor + "']").classList.add('active')
+    }
+
+    function updateSize(variant) {
+        document.getElementById('product-size').value = variant.size.Size
+    }
+
+    function resetSize() {
+        document.getElementById('product-size').value = "default"
+    }
+
+
+    function updateProductByColor(color) {
+        if (color !== selectedColor) {
+            const prod = data.styles.filter(function(style) {
+                return style.colour === color
+            })[0]
+            updateSelectedColor(color)
+            updateImage(prod)
+            updateColorText(prod)
+            const currentSize = currentVariant.size.Size
+
+            // set variant based on selected size or return first sku
+            const variant = prod.skus.filter((function(s) { return s.size.Size === currentSize}))[0] || prod.skus[0]
+
+            // if the new variant doesn't have the selected variant size, then reset the size select
+            if (variant.size.Size === currentSize) {
+                resetSize()
+            }
+
+            updatePrice(variant)
+            initQty(variant)
+
+        }
+    }
+
+
+    document.addEventListener('click', function(e) {
+        if (e.target.hasAttribute("data-color")) {
+            updateProductByColor(e.target.getAttribute("data-color"))
+        }
+    })
 })
