@@ -9,14 +9,14 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 col-md-8 col-md-push-2 offset-md-2">
+        <div class="col-lg-6 col-md-8 col-md-push-2 offset-md-2 offset-lg-0">
             <image src="" id="product-image" />
         </div>
         <div class="col-lg-6">
             <h2 id="product-name"></h2>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-lg-8">
                     <p id="product-price">
                         <span id="current-price"></span>
                         <span id="price-saving"></span>
@@ -29,9 +29,13 @@
                 </div>
             </div>
 
-            <div id="product-size-wrapper">
-                <p>Select size: <span></span></p>
-                <select id="product-size" class="custom-select"></select>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div id="product-size-wrapper">
+                        <p>Select size: <span></span></p>
+                        <select id="product-size" class="custom-select"></select>
+                    </div>
+                </div>
             </div>
 
             <div id="size-submit-wrapper">

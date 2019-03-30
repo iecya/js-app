@@ -8,6 +8,9 @@ $active-color-border-position: -4px;
 
 body {
     font-size: 18px;
+     @media (min-width: 992px) {
+         padding: 30px 0;
+     }
 }
 
 #product-colors {
@@ -100,7 +103,7 @@ body {
 #product-size-wrapper {
     select.custom-select {
         width: 50%;
-        
+
         @media (min-width: 768px) {
             width: 100%;
         }
