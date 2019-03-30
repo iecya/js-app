@@ -22,7 +22,7 @@ Then navigate to http://localhost:3000/ in your browser
 
 ### General comments
 
-On page load a request is sent to the server to get product databased on product id; the product id is randomly selected.
+On page load a request is sent to the server to get product's data based on product id; the product id is randomly selected.
 
 #### Test requirements
 
