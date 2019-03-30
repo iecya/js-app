@@ -22,6 +22,8 @@ var selectedQty = 1;
 
 function getProductData(callback) {
     var request = new XMLHttpRequest();
+    const prods = ["p60209839", "p60211771"]
+    const pid = prods[Math.floor(Math.random() * prods.length)]
 
     request.onreadystatechange = function() {
         if (request.readyState == request.DONE) {
@@ -38,12 +40,16 @@ function getProductData(callback) {
         }
     }
 
-    request.open('GET', '/product-details?pid=' + 'p60211771', true)
+    request.open('GET', '/product-details?pid=' + pid, true)
     request.send()
 }
 
 function formatCurrency(num, currency) {
     return num.toLocaleString('en-GB', {style: 'currency', currency: currency})
+}
+
+function getSize(variant) {
+    return variant.size.Size || variant.size["Std Dress Size"] + "-" + variant.size["Length"]
 }
 
 
@@ -90,13 +96,13 @@ function updateProductByColor(color) {
         updateSelectedColor(color)
         updateImage(prod)
         updateColorText(prod)
-        const currentSize = currentVariant.size.Size
+        const currentSize = getSize(currentVariant)
 
         // set variant based on selected size or return first sku
-        const variant = prod.skus.filter((function(s) { return s.size.Size === currentSize}))[0] || prod.skus[0]
+        const variant = prod.skus.filter((function(s) {return getSize(s) === currentSize}))[0] || prod.skus[0]
 
         // if the new variant doesn't have the selected variant size, then reset the size select
-        if (variant.size.Size === currentSize) {
+        if (getSize(variant) === currentSize) {
             resetSize()
         }
         updatePrice(variant)
@@ -107,10 +113,10 @@ function updateProductByColor(color) {
 
 function updateVariantBySize(el) {
     const newSize = el.value
-    const currentSize = currentVariant.size.Size
+    const currentSize = getSize(currentVariant)
     if (newSize !== currentSize) {
         const newVariant = variants.filter(function(v) {
-            return v.size.Size === newSize
+            return getSize(v) === newSize
         })[0]
         currentVariant = newVariant
         document.querySelector('#product-size-wrapper p span').innerText = newSize
@@ -146,9 +152,11 @@ function initSize(prod) {
     elSel.append(defaultOption)
     for (s = 0; s < prod.skus.length; s++) {
         const currentSize = prod.skus[s].size
+        const sizeText = currentSize["Size"] || currentSize["Std Dress Size"] + " - " + currentSize["Length"]
+        const sizeVal = currentSize["Size"] || currentSize["Std Dress Size"] + "-" + currentSize["Length"]
         const option = document.createElement("option")
-        option.setAttribute("value", currentSize["Size"])
-        option.innerText = currentSize["Size"]
+        option.setAttribute("value", sizeVal)
+        option.innerText = sizeText
         elSel.append(option)
     }
 }
@@ -198,6 +206,7 @@ function initProduct() {
     initSize(prod)
     initQty(currentVariant)
     initProdInfo(data)
+    document.getElementById("product-sku-input").value = currentVariant.upc
 }
 
 
@@ -215,16 +224,6 @@ function productColors(colors, selectedColor) {
         el.append(item)
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 ready(function() {
     getProductData(initProduct)
