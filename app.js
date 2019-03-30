@@ -79,6 +79,22 @@ ready(function() {
         productColors(data.styles, selectedColor)
     }
 
+    function initSize(prod) {
+        const elSel = document.getElementById("product-size")
+        const defaultOption = document.createElement("option")
+        defaultOption.setAttribute("disabled", true)
+        defaultOption.setAttribute("selected", true)
+        defaultOption.innerText = "Please select"
+        elSel.append(defaultOption)
+        for (s = 0; s < prod.skus.length; s++) {
+            const currentSize = prod.skus[s].size
+            const option = document.createElement("option")
+            option.setAttribute("value", currentSize["Size"])
+            option.innerText = currentSize["Size"]
+            elSel.append(option)
+        }
+    }
+
     function initProduct(data) {
         const prod = data.styles[0]
         currentProduct = prod
@@ -86,6 +102,7 @@ ready(function() {
         initName(data)
         updatePrice(prod)
         initColor(data, prod)
+        initSize(prod)
     }
 
     getProductData(initProduct)
