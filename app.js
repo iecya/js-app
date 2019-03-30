@@ -45,7 +45,7 @@ ready(function() {
         document.getElementById('product-image').setAttribute('src', src)
     }
 
-    function updateName(data) {
+    function initName(data) {
         document.getElementById('product-name').innerText = data.name
     }
 
@@ -59,32 +59,33 @@ ready(function() {
         }
     }
 
-    function productColors(colors) {
+    function productColors(colors, selectedColor) {
         const el = document.getElementById('product-colors')
         for (c = 0; c < colors.length; c++) {
-            console.log('C:', colors[c])
             const item = document.createElement("li")
             item.setAttribute("data-color", colors[c].colour)
             item.style.background = colors[c].hexCode
-            console.log('item', item, ' - color', colors[c].hex)
+            if (colors[c].colour === selectedColor) {
+                item.classList.add('active')
+            }
             el.append(item)
         }
     }
 
-    function updateColor(prod) {
+    function initColor(data, prod) {
         selectedColor = prod.colour
         const el = document.getElementById('product-selected-color')
         el.innerText = (el.innerText + ' ' + selectedColor)
-        productColors(data.styles)
+        productColors(data.styles, selectedColor)
     }
 
     function initProduct(data) {
         const prod = data.styles[0]
         currentProduct = prod
         updateImage(prod)
-        updateName(data)
+        initName(data)
         updatePrice(prod)
-        updateColor(prod)
+        initColor(data, prod)
     }
 
     getProductData(initProduct)
