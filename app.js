@@ -33,14 +33,15 @@ function ready(callback){
 ready(function() {
     const windowWidth = window.innerWidth
     var selectedColor;
+    var currentProduct;
 
     function formatCurrency(num, currency) {
         return num.toLocaleString('en-GB', {style: 'currency', currency: currency})
     }
 
-    function updateImage(data) {
+    function updateImage(prod) {
         var imageSize = (windowWidth < 769) ? 'normal' : 'huge'
-        const src = data.images[0][imageSize]
+        const src = prod.images[0][imageSize]
         document.getElementById('product-image').setAttribute('src', src)
     }
 
@@ -48,10 +49,9 @@ ready(function() {
         document.getElementById('product-name').innerText = data.name
     }
 
-    function updatePrice(data, styleIdx, skuIdx) {
-        const style = styleIdx || 0
+    function updatePrice(prod, skuIdx) {
         const sku = skuIdx || 0
-        const price = data.styles[style].skus[sku].price
+        const price = prod.skus[sku].price
         document.getElementById('current-price').innerText = formatCurrency(price.currentPrice, price.currency)
         if (price.previousPrice) {
             document.getElementById('previous-price').innerText = formatCurrency(price.previousPrice, price.currency)
@@ -71,20 +71,21 @@ ready(function() {
         }
     }
 
-    function updateColor(data, styleIdx) {
-        const style = styleIdx || 0
-        selectedColor = data.styles[style].colour
+    function updateColor(prod) {
+        selectedColor = prod.colour
         const el = document.getElementById('product-selected-color')
         el.innerText = (el.innerText + ' ' + selectedColor)
         productColors(data.styles)
     }
 
-    function updateProduct(data) {
-        updateImage(data)
+    function initProduct(data) {
+        const prod = data.styles[0]
+        currentProduct = prod
+        updateImage(prod)
         updateName(data)
-        updatePrice(data)
-        updateColor(data)
+        updatePrice(prod)
+        updateColor(prod)
     }
 
-    getProductData(updateProduct)
+    getProductData(initProduct)
 })
