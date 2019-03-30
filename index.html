@@ -1,32 +1,41 @@
 <!doctype html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="app.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css"/>
     <title>Product details</title>
 </head>
 <body>
-<image src="" id="product-image" />
-<h2 id="product-name"></h2>
-<p id="product-price">
-    <span id="current-price"></span>
-    <span id="price-saving"></span>
-    <span id="previous-price"></span>
-</p>
-<p id="product-selected-color">Selected colour:</p>
-<ul id="product-colors"></ul>
-<div id="product-size-wrapper">
-    <p>Select size:</p>
-    <select id="product-size"></select>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <image src="" id="product-image" />
+        </div>
+        <div class="col-lg-6">
+            <h2 id="product-name"></h2>
+            <p id="product-price">
+                <span id="current-price"></span>
+                <span id="price-saving"></span>
+                <span id="previous-price"></span>
+            </p>
+            <p id="product-selected-color">Selected colour:</p>
+            <ul id="product-colors"></ul>
+            <div id="product-size-wrapper">
+                <p>Select size:</p>
+                <select id="product-size"></select>
+            </div>
+            <div id="product-qty-wrapper">
+                <p>Qty:</p>
+                <select id="product-qty"></select>
+            </div>
+
+            <button role="button">Add to bag</button>
+
+            <div id="product-info"></div>
+        </div>
+    </div>
 </div>
-<div id="product-qty-wrapper">
-    <p>Qty:</p>
-    <select id="product-qty"></select>
-</div>
-
-<button role="button">Add to bag</button>
-
-<div id="product-info"></div>
-
 
 <script type="text/javascript" src="app.js"></script>
 </body>
