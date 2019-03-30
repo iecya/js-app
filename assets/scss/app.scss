@@ -93,6 +93,14 @@ body {
     p {
         font-weight: $semibold;
         margin-bottom: 0;
+
+        @media (min-width: 768px) {
+            font-weight: 200;
+
+            span {
+                font-weight: $semibold;
+            }
+        }
     }
 
     select.custom-select {

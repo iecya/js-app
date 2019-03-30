@@ -68,6 +68,13 @@ body {
   #product-qty-wrapper p {
     font-weight: 500;
     margin-bottom: 0; }
+    @media (min-width: 768px) {
+      #product-size-wrapper p,
+      #product-qty-wrapper p {
+        font-weight: 200; }
+        #product-size-wrapper p span,
+        #product-qty-wrapper p span {
+          font-weight: 500; } }
   #product-size-wrapper select.custom-select,
   #product-qty-wrapper select.custom-select {
     border-radius: 0; }
