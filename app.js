@@ -55,8 +55,8 @@ ready(function() {
         const price = prod.skus[sku].price
         document.getElementById('current-price').innerText = formatCurrency(price.currentPrice, price.currency)
         if (price.previousPrice) {
-            document.getElementById('previous-price').innerText = formatCurrency(price.previousPrice, price.currency)
-            document.getElementById('price-saving').innerText = formatCurrency((price.previousPrice - price.currentPrice), price.currency)
+            document.getElementById('previous-price').innerText = "Was " + formatCurrency(price.previousPrice, price.currency)
+            document.getElementById('price-saving').innerText = "Save " + formatCurrency((price.previousPrice - price.currentPrice), price.currency)
         }
     }
 

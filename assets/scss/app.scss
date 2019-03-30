@@ -1,5 +1,13 @@
+// colors
+$red: #A8182E;
+$semibold: 500;
+$light-grey: lighten(#000000, 60%);
+$bullet-list-margin: 15px;
+
+$active-color-border-position: -4px;
+
 body {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 18px;
 }
 
 #product-colors {
@@ -25,4 +33,92 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
+    font-size: 1em;
+    color: $red;
+
+    #current-price {
+        font-size: 1.4em;
+        font-weight: $semibold;
+    }
+
+    #previous-price {
+        color: $light-grey;
+        text-decoration: line-through;
+        font-weight: 300;
+    }
+}
+
+#product-selected-color {
+    font-weight: $semibold;
+}
+
+#product-colors {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0;
+
+    li {
+        border: 2px solid #fff;
+        position: relative;
+        cursor: pointer;
+    }
+
+    li.active:after {
+        content: '';
+        position: absolute;
+        top: $active-color-border-position;
+        right: $active-color-border-position;
+        bottom: $active-color-border-position;
+        left: $active-color-border-position;
+        border: 2px solid #000000;
+    }
+}
+
+#product-size-wrapper,
+#product-qty-wrapper {
+    margin: 15px 0;
+
+    p {
+        font-weight: $semibold;
+        margin-bottom: 0;
+    }
+
+    select.custom-select {
+        width: 50%;
+    }
+}
+
+#submit-button {
+    border-radius: 0;
+    background: #BDD654;
+    margin: 30px 0;
+    font-weight: $semibold;
+}
+
+#product-info {
+    p {
+        font-weight: 300;
+        &.info-title {
+            font-weight: 600;
+        }
+    }
+
+    ul {
+        list-style: none;
+        padding-left: (1.5 * $bullet-list-margin);
+
+        li {
+            position: relative;
+
+            &:before {
+                content: "•";
+                font-size: 0.5em;
+                vertical-align: middle;
+                margin-left: (-1 * $bullet-list-margin);
+                margin-right: $bullet-list-margin;
+            }
+        }
+    }
 }
