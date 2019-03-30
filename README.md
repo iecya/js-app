@@ -36,6 +36,12 @@ The first 2-3 commits will show my attempts with vanilla JS, hope it will be sat
 For the test purpose I included the credential to access the API in the `server.js` file; as also commented in the file itself, credentials should never leave in plain text in the code.
 Based on my experience those should be stored as environment variables in the machine/container where the app is running; assuming deployment in K8s, my approach would be to store the credentials in K8s secret and retrieve them when the pod starts up to store them in the pod env.
 
+An alternative solution could have been setting the credentials in env variable when starting the app and getting them from the env (example below); for speed purposes I simply included them in the file.
+
+```
+USERNAME=admin PASSWORD=password node ./server.js
+```
+
 
 ### Missing parts
 
