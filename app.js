@@ -77,10 +77,6 @@ function updateSelectedColor(color) {
     document.querySelector("[data-color='" + selectedColor + "']").classList.add('active')
 }
 
-function updateSize(variant) {
-    document.getElementById('product-size').value = variant.size.Size
-}
-
 function resetSize() {
     document.getElementById('product-size').value = "default"
 }
@@ -112,16 +108,19 @@ function updateProductByColor(color) {
 function updateVariantBySize(el) {
     const newSize = el.value
     const currentSize = currentVariant.size.Size
-    const newVariant = variants.filter(function(v) {
-        console.log(v)
-        return v.size.Size === newSize
-    })[0]
-    currentVariant = newVariant
     if (newSize !== currentSize) {
+        const newVariant = variants.filter(function(v) {
+            return v.size.Size === newSize
+        })[0]
+        currentVariant = newVariant
         document.querySelector('#product-size-wrapper p span').innerText = newSize
         initQty(newVariant)
         updatePrice(newVariant)
     }
+}
+
+function updateQty(el) {
+    selectedQty = el.value
 }
 
 
