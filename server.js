@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const request = require('request')
+const bodyParser = require("body-parser")
 const app = express()
 const port = 3000
 
@@ -9,6 +10,9 @@ const port = 3000
 const username = 'admin'
 const password = 'password'
 const auth = 'Basic ' + Buffer.from(username + ':' + password).toString('base64')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'))
@@ -28,6 +32,12 @@ app.get('/product-details', function(req, res) {
         uri: 'https://interview-tech-testing.herokuapp.com/product-details/' + pid,
         headers: {'Authorization': auth}}
     request.get(opts).pipe(res)
+})
+
+app.post('/basket/add', function(req, res) {
+    const query = req.body
+    console.log('query', query)
+    res.send('Thanks for the data!')
 })
 
 app.listen(port, (function() {

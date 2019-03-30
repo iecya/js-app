@@ -33,21 +33,25 @@
                 <div class="col-lg-4">
                     <div id="product-size-wrapper">
                         <p>Select size: <span></span></p>
-                        <select id="product-size" class="custom-select" onchange="updateVariantBySize(this)"></select>
+                        <select id="product-size" class="custom-select" onchange="updateVariantBySize(this)" required></select>
                     </div>
                 </div>
             </div>
 
-            <div id="size-submit-wrapper">
-                <div id="product-qty-wrapper">
-                    <p>Qty:</p>
-                    <select id="product-qty" class="custom-select" onchange="updateQty(this)"></select>
+            <form method="post" action="/basket/add">
+                <div id="size-submit-wrapper">
+                    <div id="product-qty-wrapper">
+                        <p>Qty:</p>
+                        <select id="product-qty" class="custom-select" onchange="updateQty(this)" name="quantity"></select>
+                    </div>
+
+                    <input type="hidden" id="product-sku-input" name="sku_id" />
+
+                    <button role="submit" id="submit-button" class="btn btn-lg btn-block">Add to bag</button>
+
+
                 </div>
-
-
-                <button role="button" id="submit-button" class="btn btn-lg btn-block">Add to bag</button>
-
-            </div>
+            </form>
 
 
 

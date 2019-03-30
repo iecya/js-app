@@ -101,7 +101,7 @@ function updateProductByColor(color) {
         }
         updatePrice(variant)
         initQty(variant)
-
+        document.getElementById("product-sku-input").value = variant.upc
     }
 }
 
@@ -116,6 +116,7 @@ function updateVariantBySize(el) {
         document.querySelector('#product-size-wrapper p span').innerText = newSize
         initQty(newVariant)
         updatePrice(newVariant)
+        document.getElementById("product-sku-input").value = newVariant.upc
     }
 }
 
