@@ -34,6 +34,7 @@ ready(function() {
     const windowWidth = window.innerWidth
     var selectedColor;
     var currentProduct;
+    var currentVariant;
 
     function formatCurrency(num, currency) {
         return num.toLocaleString('en-GB', {style: 'currency', currency: currency})
@@ -95,14 +96,29 @@ ready(function() {
         }
     }
 
+    function initQty(variant) {
+        const elSel = document.getElementById("product-qty")
+        const maxQty = variant.maximumPurchaseQuantity
+        for (s = 0; s < maxQty; s++) {
+            const val = s + 1
+            const option = document.createElement("option")
+            option.setAttribute("value", val)
+            option.innerText = val
+            elSel.append(option)
+        }
+    }
+
+
     function initProduct(data) {
         const prod = data.styles[0]
         currentProduct = prod
+        currentVariant = prod.skus[0]
         updateImage(prod)
         initName(data)
         updatePrice(prod)
         initColor(data, prod)
         initSize(prod)
+        initQty(currentVariant)
     }
 
     getProductData(initProduct)
